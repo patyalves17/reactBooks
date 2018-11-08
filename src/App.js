@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './css/pure-min.css';
 import './css/side-menu.css'
 import $ from 'jquery';
+import InputCustomizado from './componentes/InputCustomizado';
+import ButtonCustomizado from './componentes/ButtonCustomizado';
 
 class App extends Component {
 
@@ -11,12 +13,14 @@ class App extends Component {
       lista : [],
       nome:'',
       email:'',
-      senha:''
+      senha:'',
+      confirmaSenha:''
     };
     this.enviaForm=this.enviaForm.bind(this);
     this.setNome=this.setNome.bind(this);
     this.setEmail=this.setEmail.bind(this);
     this.setSenha=this.setSenha.bind(this);
+    this.setConfirmaSenha=this.setConfirmaSenha.bind(this);
   }
 
   componentWillMount(){
@@ -34,6 +38,7 @@ class App extends Component {
   enviaForm(evento){
     // EventTarget.
     evento.preventDefault();
+    console.log(this.state.confirmaSenha);
     
     $.ajax({
       url:'http://localhost:8080/api/autores',
@@ -56,13 +61,15 @@ class App extends Component {
 
   setNome(evento){
     this.setState({nome:evento.target.value});
-
   }
   setEmail(evento){
     this.setState({email:evento.target.value});
   }
   setSenha(evento){
     this.setState({senha:evento.target.value});
+  }
+  setConfirmaSenha(evento){
+    this.setState({confirmaSenha:evento.target.value});
   }
 
   render() {
@@ -95,22 +102,14 @@ class App extends Component {
               <div className="pure-form pure-form-aligned">
                 {
                    <form className="pure-form pure-form-aligned" method="post" onSubmit={this.enviaForm}>
-                  <div className="pure-control-group">
-                    <label htmlFor="nome">Nome</label>
-                    <input type="text" id="nome"  name="nome" value={this.state.nome} onChange={this.setNome }/>
-                  </div>
-                  <div className="pure-control-group">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email"  name="email" value={this.state.email} onChange={this.setEmail} />
-                  </div>
-                  <div className="pure-control-group">
-                    <label htmlFor="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" value={this.state.senha} onChange={this.setSenha} />
-                  </div>
-                  <div className="pure-control-group">
-                    <label></label>
-                    <button type="submit" className="pure-button pure-button-primary">Gravar</button>
-                  </div>
+
+
+                  <InputCustomizado id="nome"  name="nome" type="text" label="Nome" value={this.state.nome} onChange={this.setNome }/>
+                  <InputCustomizado id="email"  name="email" type="email" label="Email" value={this.state.email} onChange={this.setEmail }/>
+                  <InputCustomizado id="senha"  name="senha" type="text" label="Senha" value={this.state.senha} onChange={this.setSenha }/>
+                  <ButtonCustomizado id="gravar" name="gravar" text="Gravar"/>
+               
+                 
                 </form> 
                 }
 
